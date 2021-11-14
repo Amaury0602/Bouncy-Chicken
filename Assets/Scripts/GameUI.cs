@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameUI : MonoBehaviour
 {
@@ -10,6 +12,10 @@ public class GameUI : MonoBehaviour
     [SerializeField] private GameObject restartButton;
     [SerializeField] private GameObject nextLevelButton;
     [SerializeField] private GameObject tapStartTuto;
+    
+
+    [SerializeField] private Image panel;
+    [SerializeField] private GameObject directionTapTuto;
 
 
     void Awake()
@@ -24,6 +30,9 @@ public class GameUI : MonoBehaviour
         if (PlayerPrefs.GetInt("Level") > 1)
         {
             tapStartTuto.SetActive(false);
+        } else
+        {
+            tapStartTuto.SetActive(true);
         }
     }
 
@@ -50,5 +59,14 @@ public class GameUI : MonoBehaviour
     public void HideTapStartTuto()
     {
         tapStartTuto.SetActive(false);
+    }
+
+
+    public void ShowPanel(bool show, bool tuto = false)
+    {
+        float amount = show ? 0.5f : 0;
+        panel.DOFade(amount, 0.25f).SetEase(Ease.Linear).SetUpdate(true);
+
+        directionTapTuto.SetActive(tuto);
     }
 }

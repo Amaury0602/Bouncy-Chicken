@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SawMaterial
-  m_Shader: {fileID: 4800000, guid: 7cd5de0b884b14f88ab763ef465e1799, type: 3}
+  m_Shader: {fileID: 4800000, guid: 128c5f1edaefa4c4fb3f9f7a4615edb2, type: 3}
   m_ShaderKeywords: _RIMLIMIT_ON _RIMOVERLAP_ON _SPCOVERLAP_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -75,7 +75,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Offset: 0.24
-    - _OtlWidth: 0
+    - _OtlWidth: 2.66
     - _Parallax: 0.02
     - _PostAtten: 0
     - _RimIntense: 0.552
@@ -101,7 +101,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.5188679, g: 0.038222224, b: 0, a: 1}
+    - _Color: {r: 0.6132076, g: 0.046455115, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MaxColor: {r: 0, g: 0.76902664, b: 0.8113208, a: 1}
     - _MinColor: {r: 0, g: 0, b: 0, a: 1}

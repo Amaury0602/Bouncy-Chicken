@@ -60,8 +60,6 @@ public class ChickenBuilding : MonoBehaviour
         actualParts.Add(part);
 
         part.OnPickup(destination, player);
-        
-        player.ResetCenterOfMass();
     }
 
     public void OnLose()

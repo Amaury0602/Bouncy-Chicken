@@ -40,16 +40,28 @@ public class PlayerController : MonoBehaviour
 
     private bool justHitPropulsor = false;
 
-
-    [SerializeField] private AudioClip[] jumpSounds = new AudioClip[3];
-    private AudioSource source;
-
-    [SerializeField] private GameObject arrow;
-    private Vector3 arrowStartPosition;
-
     private GameUI gameUI;
 
+
+    //AUDIO
+    [SerializeField] private AudioClip[] jumpSounds = new AudioClip[3];
+    [SerializeField] private AudioClip winSound;
+    private AudioSource source;
+
+
+    //ARROW
+    [SerializeField] private GameObject arrow;
+    private MeshRenderer arrowMesh;
+    private Color arrowStartColor;
     private bool canDisplayArrow = false;
+    private Tween arrowTween;
+
+
+    [SerializeField] private GameObject poofEffect;
+
+
+
+    
 
 
     void Start()
@@ -67,8 +79,11 @@ public class PlayerController : MonoBehaviour
         chickenBuilding = GetComponent<ChickenBuilding>();
 
         camScript.Init(transform);
-        arrowStartPosition = arrow.transform.localPosition;
+        arrowMesh = arrow.transform.GetComponentInChildren<MeshRenderer>();
+        arrowStartColor = arrowMesh.material.color;
         gameUI = FindObjectOfType<GameUI>();
+
+        gameUI.ShowPanel(false);
     }
 
     private void OnFingerDown(LeanFinger obj)
@@ -95,6 +110,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(xVelocity, yVelocity, rb.velocity.z);
     }
 
+    private bool detectGround = false;
     private void Jump()
     {
         if (PlayerPrefs.GetInt("Level") == 0)
@@ -106,19 +122,24 @@ public class PlayerController : MonoBehaviour
             if (Time.timeScale < 1)
             {
                 arrow.SetActive(false);
-                arrow.transform.DOKill();
-                arrow.transform.localPosition = arrowStartPosition;
+                print(arrowStartColor);
+                arrowTween.Kill();
+                arrowMesh.material.color = arrowStartColor;
                 Time.timeScale = 1;
+                gameUI.ShowPanel(false);
             }
         }
 
 
         isGrounded = false;
-        bool firstJump = false;
+
         if (!gameStarted)
         {
+            DOVirtual.DelayedCall(0.25f, () =>
+            {
+                detectGround = true;
+            });
             gameStarted = true;
-            firstJump = true;
             rb.isKinematic = false;
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             gameUI.HideTapStartTuto();
@@ -140,11 +161,6 @@ public class PlayerController : MonoBehaviour
         source.Play();
     }
 
-    private void Spin()
-    {
-        rb.AddTorque(new Vector3(0, 1,-1)* rotationTorque, ForceMode.Impulse);
-    }
-
     public void Lose()
     {
         rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
@@ -159,31 +175,19 @@ public class PlayerController : MonoBehaviour
     public void Win()
     {
         if (!alive) return;
+        source.clip = winSound;
+        source.Play();
+        gameUI.ShowPanel(true);
         camScript.OnGameEnded(true, gameObject);
         hasWon = true;
         GameManager.instance.OnSuccess();
     }
 
-    public void ResetCenterOfMass()
-    {
-        //Vector3 newCenter = rb.centerOfMass;
-        //rb.centerOfMass = new Vector3(newCenter.x, newCenter.y, startCenterOfMass.z);
-
-        //print(rb.centerOfMass);
-    }
-
+    int arrowCount = 0;
     private void OnCollisionEnter(Collision collision)
     {
         if (hasWon || !alive || !gameStarted) return;
 
-        //foreach (var c in collision.contacts)
-        //{
-        //    if (c.thisCollider.GetComponent<ChickenDeathCollision>())
-        //    {
-        //        Lose();
-        //        return;
-        //    }
-        //}
 
         if (collision.collider.CompareTag("Blade"))
         {
@@ -193,28 +197,39 @@ public class PlayerController : MonoBehaviour
 
         if (collision.collider.CompareTag("Ground"))
         {
-            if (PlayerPrefs.GetInt("Level") == 0 && canDisplayArrow)
+            if (PlayerPrefs.GetInt("Level") == 0 && canDisplayArrow && arrowCount < 2)
             {
-                canDisplayArrow = false;
-                Time.timeScale = 0.15f;
-                arrow.SetActive(true);
-                arrow.transform.localPosition = arrowStartPosition;
-                arrow.transform.DOKill();
-                arrow.transform.DOLocalMoveY(0.3f, 0.75f).SetLoops(-1).SetUpdate(true).SetEase(Ease.Linear);
+                DisplayArrowTutorial();
             }
-            isGrounded = true;
+            if (detectGround) isGrounded = true;
         }
     }
 
+    private void DisplayArrowTutorial()
+    {
+        arrowCount++;
+        canDisplayArrow = false;
+        Time.timeScale = 0.1f;
+        gameUI.ShowPanel(true, true);
+        arrow.SetActive(true);
+        arrow.transform.DOKill();
+        arrowMesh.material.color = arrowStartColor;
+        arrowTween = arrowMesh.material.DOColor(Color.black, 0.25f).SetLoops(-1, LoopType.Yoyo).SetUpdate(true).SetEase(Ease.Linear);
+    }
+
+
+    private Propulsor lastHitPropulsor;
     private void OnTriggerEnter(Collider other)
     {
 
         Propulsor propulsor = other.GetComponent<Propulsor>();
 
-        if (propulsor && !justHitPropulsor)
+        if (propulsor && propulsor != lastHitPropulsor)
         {
+            lastHitPropulsor = propulsor; 
+            Instantiate(poofEffect, transform.position, transform.rotation);
             justHitPropulsor = true;
-            rb.AddForce(propulsor.transform.up * upForce * 5, ForceMode.Impulse);
+            rb.AddForce(propulsor.transform.right * upForce * 7, ForceMode.Impulse);
             DOVirtual.DelayedCall(0.5f, () => { justHitPropulsor = false;  });
         }
 
@@ -223,20 +238,20 @@ public class PlayerController : MonoBehaviour
         {
             transform.DOKill();
             transform.localScale = startScale;
-            transform.DOPunchScale(transform.localScale, 0.1f, 1).SetEase(Ease.Linear).OnComplete(() => 
+            transform.DOPunchScale(transform.localScale, 0.1f, 1).SetUpdate(true).SetEase(Ease.Linear).OnComplete(() => 
             {
                 transform.localScale = startScale;
             });            
             Instantiate(pickupParticle, transform.position, Quaternion.identity);
 
 
-            cam.DOShakePosition(0.05f, new Vector3(0, 0.05f, 0));
+            cam.DOShakePosition(0.05f, new Vector3(0, 0.05f, 0)).SetUpdate(true);
 
             foreach (var renderer in GetComponentsInChildren<MeshRenderer>())
             {
                 Color startColor = renderer.material.color;
                 renderer.material.color = Color.white;
-                DOVirtual.DelayedCall(0.15f, () => { renderer.material.color = startColor; });
+                DOVirtual.DelayedCall(0.15f, () => { renderer.material.color = startColor; }).SetUpdate(true);
             }
 
             chickenBuilding.OnBodyPickup(part);

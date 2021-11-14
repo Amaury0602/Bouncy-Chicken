@@ -10,6 +10,12 @@ public class GameManager : MonoBehaviour
 
     private Tween slowMoTween = null;
 
+    private float chickenPercent = 0;
+
+
+    public Color[] gameColors = new Color[3];
+    public Material[] gameMaterials = new Material[3];
+
 
     void Awake()
     {

@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("Level") >= levelPrefabs.Count)
         {
-            PlayerPrefs.SetInt("Level", 0);
+            PlayerPrefs.SetInt("Level", 1);
         }
         GameObject nextLevel = levelPrefabs[PlayerPrefs.GetInt("Level")];
 
@@ -65,4 +65,20 @@ public class LevelManager : MonoBehaviour
         spawnedPlayer.transform.position = spawnedLevel.GetComponent<Level>().playerSpawn.position;
         Time.timeScale = 1;
     }
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
+            BuildLevel();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            PlayerPrefs.DeleteAll();
+        }
+    }
+#endif
 }
