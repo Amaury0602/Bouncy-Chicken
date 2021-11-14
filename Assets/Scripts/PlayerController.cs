@@ -87,10 +87,8 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-
-        bool firstJump = false;
-
         isGrounded = false;
+        bool firstJump = false;
         if (!gameStarted)
         {
             gameStarted = true;
@@ -180,7 +178,7 @@ public class PlayerController : MonoBehaviour
         if (propulsor && !justHitPropulsor)
         {
             justHitPropulsor = true;
-            rb.AddForce(propulsor.transform.up * upForce * 3, ForceMode.Impulse);
+            rb.AddForce(propulsor.transform.up * upForce * 5, ForceMode.Impulse);
             DOVirtual.DelayedCall(0.5f, () => { justHitPropulsor = false;  });
         }
 
