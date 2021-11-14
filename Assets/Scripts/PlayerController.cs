@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
         LeanTouch.OnFingerDown += OnFingerDown;
         rb = GetComponent<Rigidbody>();
         startCenterOfMass = rb.centerOfMass;
+
+        rb.isKinematic = true;
         
         camScript = FindObjectOfType<CamScript>();
         chickenBuilding = GetComponent<ChickenBuilding>();
@@ -84,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
         float xVelocity = rb.velocity.x;
         float yVelocity = rb.velocity.y;
-        xVelocity = Mathf.Clamp(xVelocity, 0, maxVelocityX);
+        xVelocity = Mathf.Clamp(xVelocity, -2, maxVelocityX);
         yVelocity = Mathf.Clamp(yVelocity, -50, maxVelocityY);
         rb.velocity = new Vector3(xVelocity, yVelocity, rb.velocity.z);
     }
@@ -96,11 +98,13 @@ public class PlayerController : MonoBehaviour
 
         jumpCount--;
 
-        //isGrounded = false;
+        isGrounded = false;
         if (!gameStarted)
         {
             gameStarted = true;
             firstJump = true;
+            rb.isKinematic = false;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
         //OLD WAY
         //rb.AddForce(new Vector3(jumpForceForward * transform.up.y, jumpForceUp, 0), ForceMode.Impulse);
@@ -113,7 +117,8 @@ public class PlayerController : MonoBehaviour
             //return;
         }
 
-        if (jumpCount == 0) rb.AddTorque(Vector3.back * rotationTorque, ForceMode.Impulse);
+        /*if (jumpCount == 0) */
+        rb.AddTorque(Vector3.back * rotationTorque, ForceMode.Impulse);
     }
 
     private void Spin()
@@ -142,12 +147,21 @@ public class PlayerController : MonoBehaviour
 
     public void ResetCenterOfMass()
     {
-        rb.centerOfMass = startCenterOfMass;
+        //rb.centerOfMass = startCenterOfMass;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (hasWon || !alive) return;
+
+        foreach (var c in collision.contacts)
+        {
+            if (c.thisCollider.GetComponent<ChickenDeathCollision>())
+            {
+                Lose();
+                return;
+            }
+        }
 
         if (collision.collider.CompareTag("Blade"))
         {

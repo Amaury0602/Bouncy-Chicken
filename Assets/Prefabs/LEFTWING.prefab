@@ -61,7 +61,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partType: 0
-  bodyCollider: {fileID: 149327065670959250}
+  bodyColliders:
+  - {fileID: 149327065670959250}
   attachPoints: []
   shineParticle: {fileID: 6189044463426571306}
 --- !u!1 &653208876106522663
@@ -351,8 +352,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7086756, y: 0.7305387, z: 0.107389614}
-  m_Center: {x: 0.0054211617, y: -0.33973077, z: -0.073485404}
+  m_Size: {x: 0.7086756, y: 0.50272065, z: 0.10738953}
+  m_Center: {x: 0.0054211617, y: -0.22581911, z: -0.07348466}
 --- !u!1001 &6189757080028439234
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -382,15 +383,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4876361971356334, guid: 5cf3d5a8ebfba3c46be0b9bf224342ea, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.23280609
+      value: 0.30497596
       objectReference: {fileID: 0}
     - target: {fileID: 4876361971356334, guid: 5cf3d5a8ebfba3c46be0b9bf224342ea, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.23280604
+      value: 0.3049759
       objectReference: {fileID: 0}
     - target: {fileID: 4876361971356334, guid: 5cf3d5a8ebfba3c46be0b9bf224342ea, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.23280606
+      value: 0.30497593
       objectReference: {fileID: 0}
     - target: {fileID: 4876361971356334, guid: 5cf3d5a8ebfba3c46be0b9bf224342ea, type: 3}
       propertyPath: m_LocalPosition.x

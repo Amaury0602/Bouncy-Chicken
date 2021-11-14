@@ -211,7 +211,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partType: 2
-  bodyCollider: {fileID: 5785558650000775702}
+  bodyColliders:
+  - {fileID: 5785558650000775702}
+  - {fileID: 3602945693198002920}
   attachPoints:
   - point: {fileID: 7323856953061413072}
     type: 1

@@ -10,7 +10,7 @@ public class BodyPart : MonoBehaviour
 
     private Collider pickupCollider;
 
-    [SerializeField] private Collider bodyCollider;
+    [SerializeField] private List<Collider> bodyColliders = new List<Collider>();
 
     public List<AttachPoint> attachPoints = new List<AttachPoint>();
 
@@ -23,9 +23,12 @@ public class BodyPart : MonoBehaviour
     {
         startScale = transform.localScale;
         pickupCollider = GetComponentInChildren<Collider>();
-        if (bodyCollider != null)
+        if (bodyColliders.Count > 0)
         {
-            bodyCollider.enabled = false;
+            foreach(var b in bodyColliders)
+            {
+                b.enabled = false;
+            }
         }
     }
 
@@ -40,22 +43,29 @@ public class BodyPart : MonoBehaviour
         transform.localEulerAngles = Vector3.zero;
 
         transform.localScale = Vector3.zero;
-        transform.DOScale(startScale, 0.25f).SetEase(Ease.InQuint);
+        transform.DOScale(startScale, 0.15f).SetEase(Ease.InQuint);
 
         pickupCollider.enabled = false;
 
-        if (bodyCollider != null)
+        if (bodyColliders.Count > 0)
         {
-            bodyCollider.enabled = true;
+            foreach (var b in bodyColliders)
+            {
+                b.enabled = true;
+            }
         }
     }
 
     public void Dismember()
     {
-        if (bodyCollider != null)
+        if (bodyColliders.Count > 0)
         {
-            bodyCollider.gameObject.layer = 0;
-        } else
+            foreach(var b in bodyColliders)
+            {
+                b.gameObject.layer = 0;
+            }
+        }
+        else
         {
             gameObject.layer = 0;
         }
