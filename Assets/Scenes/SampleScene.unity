@@ -811,8 +811,6 @@ MonoBehaviour:
   playerPrefab: {fileID: 6819597875738118533, guid: 3af68d61992946648a8c45c6f1f999c9, type: 3}
   levelPrefabs:
   - {fileID: 8650823013977888713, guid: 771e567500ea75f48984a423b4fe6abd, type: 3}
-  - {fileID: 8650823013977888713, guid: 6c5f22b070a4e3c47bec696469121aec, type: 3}
-  - {fileID: 8650823013977888713, guid: 13ca2cfdd521316438ef90db35e0e68c, type: 3}
 --- !u!4 &827851512
 Transform:
   m_ObjectHideFlags: 0
@@ -962,7 +960,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 14.8
+  orthographic size: 11.6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1005,7 +1003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  offset: {x: 7.65, y: 6.33, z: -15.59}
+  offset: {x: 5.79, y: 6.33, z: -15.59}
   followSpeed: 0.49667326
 --- !u!1 &1135182055
 GameObject:
