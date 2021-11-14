@@ -8,14 +8,8 @@ public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody rb;
-    [SerializeField] private float jumpForceForward;
-    [SerializeField] private float jumpForceUp;
     [SerializeField] private float upForce;
     [SerializeField] private float rotationTorque;
-
-
-    private int jumpCount = 2;
-
 
     [SerializeField] private float maxAngularVelocity;
     [SerializeField] private float minAngularVelocity = 1.5f;
@@ -44,15 +38,15 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 startScale;
 
-    [SerializeField] private List<Material> materials = new List<Material>();
-    
-    // for tweening;
+    private bool justHitPropulsor = false;
 
 
-    [SerializeField] private List<Transform> bodyParts = new List<Transform>();
+    [SerializeField] private AudioClip[] jumpSounds = new AudioClip[3];
+    private AudioSource source;
 
     void Start()
     {
+        source = GetComponent<AudioSource>();
         cam = Camera.main;
         startScale = transform.localScale;
         LeanTouch.OnFingerDown += OnFingerDown;
@@ -69,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnFingerDown(LeanFinger obj)
     {
-        if (isGrounded && jumpCount > 0)
+        if (isGrounded)
         {
             Jump();
         }
@@ -96,8 +90,6 @@ public class PlayerController : MonoBehaviour
 
         bool firstJump = false;
 
-        jumpCount--;
-
         isGrounded = false;
         if (!gameStarted)
         {
@@ -106,19 +98,21 @@ public class PlayerController : MonoBehaviour
             rb.isKinematic = false;
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
-        //OLD WAY
-        //rb.AddForce(new Vector3(jumpForceForward * transform.up.y, jumpForceUp, 0), ForceMode.Impulse);
-        rb.AddForce(transform.up * upForce, ForceMode.Impulse);
+        Vector3 jumpDirection = transform.up;
+        float jumpX = Mathf.Clamp(jumpDirection.x, -0.1f, 50);
+        float jumpY = Mathf.Clamp(jumpDirection.y, 0.3f, 50);
+        jumpDirection = new Vector3(jumpX, jumpY, jumpDirection.z);
 
-
-        if (transform.up.y > 0.8f && !firstJump)
-        {
-            //Spin();
-            //return;
-        }
-
-        /*if (jumpCount == 0) */
+        //ADD FORCE AND ROTATION
+        rb.AddForce(jumpDirection * upForce, ForceMode.Impulse);
         rb.AddTorque(Vector3.back * rotationTorque, ForceMode.Impulse);
+
+
+        //PLAY RANDOM SOUND
+        if (Random.Range(0f, 1f) < 0.5f) return;
+        AudioClip randClip = jumpSounds[Random.Range(0, jumpSounds.Length)];
+        source.clip = randClip;
+        source.Play();
     }
 
     private void Spin()
@@ -140,28 +134,31 @@ public class PlayerController : MonoBehaviour
     public void Win()
     {
         if (!alive) return;
-        camScript.OnGameEnded(true);
+        camScript.OnGameEnded(true, gameObject);
         hasWon = true;
         GameManager.instance.OnSuccess();
     }
 
     public void ResetCenterOfMass()
     {
-        //rb.centerOfMass = startCenterOfMass;
+        //Vector3 newCenter = rb.centerOfMass;
+        //rb.centerOfMass = new Vector3(newCenter.x, newCenter.y, startCenterOfMass.z);
+
+        //print(rb.centerOfMass);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (hasWon || !alive) return;
 
-        foreach (var c in collision.contacts)
-        {
-            if (c.thisCollider.GetComponent<ChickenDeathCollision>())
-            {
-                Lose();
-                return;
-            }
-        }
+        //foreach (var c in collision.contacts)
+        //{
+        //    if (c.thisCollider.GetComponent<ChickenDeathCollision>())
+        //    {
+        //        Lose();
+        //        return;
+        //    }
+        //}
 
         if (collision.collider.CompareTag("Blade"))
         {
@@ -172,12 +169,21 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             isGrounded = true;
-            jumpCount = 2;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+
+        Propulsor propulsor = other.GetComponent<Propulsor>();
+
+        if (propulsor && !justHitPropulsor)
+        {
+            justHitPropulsor = true;
+            rb.AddForce(propulsor.transform.up * upForce * 3, ForceMode.Impulse);
+            DOVirtual.DelayedCall(0.5f, () => { justHitPropulsor = false;  });
+        }
+
         BodyPart part = other.GetComponent<BodyPart>();
         if (part)
         {

@@ -34,17 +34,6 @@ public class ChickenBuilding : MonoBehaviour
             }
         }
 
-
-#if UNITY_EDITOR
-        //print(mainPart.partType);
-
-        //foreach (var item in mainPart.attachPoints)
-        //{
-        //    print(item.type);
-        //}
-#endif
-
-
         Transform destination = null;
 
         switch (part.partType)

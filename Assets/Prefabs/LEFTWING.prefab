@@ -320,7 +320,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6902361112993931193}
   - component: {fileID: 149327065670959250}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: BodyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,8 +352,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7086756, y: 0.50272065, z: 0.10738953}
-  m_Center: {x: 0.0054211617, y: -0.22581911, z: -0.07348466}
+  m_Size: {x: 0.7086756, y: 0.34496284, z: 0.10738954}
+  m_Center: {x: 0.0054211617, y: -0.14693981, z: -0.07348456}
 --- !u!1001 &6189757080028439234
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -30,7 +30,11 @@ public class BodyPart : MonoBehaviour
                 b.enabled = false;
             }
         }
-    }
+
+        if (partType == PartType.LWing || partType == PartType.RWing || partType == PartType.Feet)
+        {
+            transform.localScale *= 1.3f;
+        }    }
 
     public void OnPickup(Transform destination, PlayerController player)
     {

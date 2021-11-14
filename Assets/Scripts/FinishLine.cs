@@ -6,6 +6,8 @@ public class FinishLine : MonoBehaviour
 
     private bool lineCrossed = false;
 
+    [SerializeField] private ParticleSystem[] confettis = new ParticleSystem[2];
+
     private void OnTriggerEnter(Collider other)
     {
         if (lineCrossed) return;
@@ -15,6 +17,12 @@ public class FinishLine : MonoBehaviour
         {
             lineCrossed = true;
             player.Win();
+
+
+            foreach (var particle in confettis)
+            {
+                particle.Play();
+            }
         }
     }
 }

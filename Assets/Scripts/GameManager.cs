@@ -18,9 +18,6 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         levelManager = GetComponent<LevelManager>();
-
-
-        
     }
 
     public void OnGameOver()
