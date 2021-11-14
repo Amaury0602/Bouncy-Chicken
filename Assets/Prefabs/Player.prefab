@@ -91,6 +91,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 27099dbf56157d04582c209de2f432a3, type: 3}
   - {fileID: 8300000, guid: e8ff369ed542b72438f09f467eb09398, type: 3}
   - {fileID: 8300000, guid: dd630a240bcd9134fa4a04d5a5429f1d, type: 3}
+  arrow: {fileID: 3760119639246871327}
 --- !u!54 &6819597875738118532
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -282,6 +283,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c385ce28babaa4342a2a539b1da7e250, type: 3}
+--- !u!1 &3760119639246871327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2216511966822183749, guid: c385ce28babaa4342a2a539b1da7e250, type: 3}
+  m_PrefabInstance: {fileID: 3092848144490244186}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6914632697475907181 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8437974172131071543, guid: c385ce28babaa4342a2a539b1da7e250, type: 3}

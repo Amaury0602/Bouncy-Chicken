@@ -44,6 +44,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip[] jumpSounds = new AudioClip[3];
     private AudioSource source;
 
+    [SerializeField] private GameObject arrow;
+    private Vector3 arrowStartPosition;
+
+    private GameUI gameUI;
+
+    private bool canDisplayArrow = false;
+
+
     void Start()
     {
         source = GetComponent<AudioSource>();
@@ -59,6 +67,8 @@ public class PlayerController : MonoBehaviour
         chickenBuilding = GetComponent<ChickenBuilding>();
 
         camScript.Init(transform);
+        arrowStartPosition = arrow.transform.localPosition;
+        gameUI = FindObjectOfType<GameUI>();
     }
 
     private void OnFingerDown(LeanFinger obj)
@@ -87,6 +97,22 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        if (PlayerPrefs.GetInt("Level") == 0)
+        {
+            DOVirtual.DelayedCall(0.5f, () =>
+            {
+                canDisplayArrow = true;
+            });
+            if (Time.timeScale < 1)
+            {
+                arrow.SetActive(false);
+                arrow.transform.DOKill();
+                arrow.transform.localPosition = arrowStartPosition;
+                Time.timeScale = 1;
+            }
+        }
+
+
         isGrounded = false;
         bool firstJump = false;
         if (!gameStarted)
@@ -95,6 +121,7 @@ public class PlayerController : MonoBehaviour
             firstJump = true;
             rb.isKinematic = false;
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            gameUI.HideTapStartTuto();
         }
         Vector3 jumpDirection = transform.up;
         float jumpX = Mathf.Clamp(jumpDirection.x, -0.1f, 50);
@@ -147,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (hasWon || !alive) return;
+        if (hasWon || !alive || !gameStarted) return;
 
         //foreach (var c in collision.contacts)
         //{
@@ -166,6 +193,15 @@ public class PlayerController : MonoBehaviour
 
         if (collision.collider.CompareTag("Ground"))
         {
+            if (PlayerPrefs.GetInt("Level") == 0 && canDisplayArrow)
+            {
+                canDisplayArrow = false;
+                Time.timeScale = 0.15f;
+                arrow.SetActive(true);
+                arrow.transform.localPosition = arrowStartPosition;
+                arrow.transform.DOKill();
+                arrow.transform.DOLocalMoveY(0.3f, 0.75f).SetLoops(-1).SetUpdate(true).SetEase(Ease.Linear);
+            }
             isGrounded = true;
         }
     }

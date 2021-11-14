@@ -9,6 +9,7 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] private GameObject restartButton;
     [SerializeField] private GameObject nextLevelButton;
+    [SerializeField] private GameObject tapStartTuto;
 
 
     void Awake()
@@ -19,6 +20,11 @@ public class GameUI : MonoBehaviour
 
         restartButton.SetActive(false);
         nextLevelButton.SetActive(false);
+
+        if (PlayerPrefs.GetInt("Level") > 1)
+        {
+            tapStartTuto.SetActive(false);
+        }
     }
 
     public void DisplayRestart()
@@ -39,5 +45,10 @@ public class GameUI : MonoBehaviour
     public void OnNextLevelClicked()
     {
         LevelManager.instance.NextLevel();
+    }
+
+    public void HideTapStartTuto()
+    {
+        tapStartTuto.SetActive(false);
     }
 }
