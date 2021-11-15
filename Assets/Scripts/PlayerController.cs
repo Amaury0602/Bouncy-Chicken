@@ -229,7 +229,7 @@ public class PlayerController : MonoBehaviour
             lastHitPropulsor = propulsor; 
             Instantiate(poofEffect, transform.position, transform.rotation);
             justHitPropulsor = true;
-            rb.AddForce(propulsor.transform.right * upForce * 7, ForceMode.Impulse);
+            rb.AddForce(propulsor.transform.up * upForce * 7, ForceMode.Impulse);
             DOVirtual.DelayedCall(0.5f, () => { justHitPropulsor = false;  });
         }
 

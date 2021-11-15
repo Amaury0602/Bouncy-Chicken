@@ -8,6 +8,15 @@ public class FinishLine : MonoBehaviour
 
     [SerializeField] private ParticleSystem[] confettis = new ParticleSystem[2];
 
+
+    public void Init()
+    {
+        foreach (var particle in confettis)
+        {
+            particle.Stop();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (lineCrossed) return;
