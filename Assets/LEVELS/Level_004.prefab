@@ -543,6 +543,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8650823013977888710}
     m_Modifications:
+    - target: {fileID: 6439519425828466766, guid: bc9ec0c5cdfb81b46a67ac391137f93a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6569129882072512260, guid: bc9ec0c5cdfb81b46a67ac391137f93a, type: 3}
       propertyPath: m_Name
       value: PROPULSOR_OBJECT (3)

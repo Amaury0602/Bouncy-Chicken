@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 653208876005633933}
   - component: {fileID: 2146708631700175183}
   - component: {fileID: 3775273489531124133}
+  - component: {fileID: 7018090383544267511}
   m_Layer: 7
   m_Name: LEFTWING
   m_TagString: Untagged
@@ -65,6 +66,25 @@ MonoBehaviour:
   - {fileID: 149327065670959250}
   attachPoints: []
   shineParticle: {fileID: 6189044463426571306}
+--- !u!95 &7018090383544267511
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653208876005633922}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 33a79fc2f36eb0f449b1642c42796cae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &653208876106522663
 GameObject:
   m_ObjectHideFlags: 0

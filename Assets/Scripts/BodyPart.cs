@@ -19,6 +19,8 @@ public class BodyPart : MonoBehaviour
 
     private Vector3 startScale;
 
+    private Animator anim;
+
     private void Awake()
     {
         startScale = transform.localScale;
@@ -34,7 +36,18 @@ public class BodyPart : MonoBehaviour
         if (partType == PartType.LWing || partType == PartType.RWing || partType == PartType.Feet)
         {
             transform.localScale *= 1.3f;
-        }    }
+        }
+
+        anim = GetComponent<Animator>();
+    }
+
+    public void PlayAnimation()
+    {
+        if (anim != null)
+        {
+            anim.SetTrigger("Play");
+        }
+    }
 
     public void OnPickup(Transform destination, PlayerController player)
     {

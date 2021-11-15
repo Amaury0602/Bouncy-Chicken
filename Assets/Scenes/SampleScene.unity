@@ -1115,7 +1115,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11.6
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1159,8 +1159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  offset: {x: 5.79, y: 6.33, z: -15.59}
-  followSpeed: 0.49667326
+  offset: {x: 5.6, y: 6.33, z: -15.59}
+  followSpeed: 1
   rewardGlow: {fileID: 1018035857}
 --- !u!198 &1018035857 stripped
 ParticleSystem:
@@ -1996,6 +1996,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7656965101912615889, guid: 9b7ab8dcd20de19469edd2a9b78373b2, type: 3}
+      propertyPath: levelPrefabs.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7656965101912615889, guid: 9b7ab8dcd20de19469edd2a9b78373b2, type: 3}
+      propertyPath: levelPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 8650823013977888713, guid: e4914da7bc9d65d4d8e8e93e91396cb6, type: 3}
     - target: {fileID: 7656965101912615891, guid: 9b7ab8dcd20de19469edd2a9b78373b2, type: 3}
       propertyPath: m_Name
       value: GAMEMANAGER

@@ -149,6 +149,9 @@ public class PlayerController : MonoBehaviour
         float jumpY = Mathf.Clamp(jumpDirection.y, 0.3f, 50);
         jumpDirection = new Vector3(jumpX, jumpY, jumpDirection.z);
 
+
+        if (jumpDirection.y >= 0.8f) chickenBuilding.AnimateBody();
+
         //ADD FORCE AND ROTATION
         rb.AddForce(jumpDirection * upForce, ForceMode.Impulse);
         rb.AddTorque(Vector3.back * rotationTorque, ForceMode.Impulse);
@@ -226,7 +229,9 @@ public class PlayerController : MonoBehaviour
 
         if (propulsor && propulsor != lastHitPropulsor)
         {
-            lastHitPropulsor = propulsor; 
+            lastHitPropulsor = propulsor;
+            chickenBuilding.AnimateBody();
+            propulsor.OnActivation();
             Instantiate(poofEffect, transform.position, transform.rotation);
             justHitPropulsor = true;
             rb.AddForce(propulsor.transform.up * upForce * 7, ForceMode.Impulse);

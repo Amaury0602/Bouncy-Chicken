@@ -60,6 +60,17 @@ public class ChickenBuilding : MonoBehaviour
         actualParts.Add(part);
 
         part.OnPickup(destination, player);
+
+        AnimateBody();
+    }
+
+
+    public void AnimateBody()
+    {
+        foreach (var _part in actualParts)
+        {
+            _part.PlayAnimation();
+        }
     }
 
     public void OnLose()
