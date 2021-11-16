@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private Tween slowMoTween = null;
 
     private float chickenPercent = 0;
+    private float maxChickenParts = 5f;
 
 
     public Color[] gameColors = new Color[3];
@@ -32,14 +33,17 @@ public class GameManager : MonoBehaviour
         GameUI.instance.DisplayRestart();
     }
     
-    public void OnSuccess()
+    public void OnSuccess(int parts)
     {
         slowMoTween = DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.15f, 0.75f).SetEase(Ease.InCubic).SetUpdate(true).OnComplete(() =>
         {
-            GameUI.instance.DisplayNextLevel();
+            //GameUI.instance.DisplayNextLevel();
+            GameUI.instance.ShowChickenCompletion((float)parts / maxChickenParts);
         });
         int actualLevel = PlayerPrefs.GetInt("Level");
         PlayerPrefs.SetInt("Level", actualLevel + 1);
+
+        
     }
 
 }

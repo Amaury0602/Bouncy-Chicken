@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
         gameUI.ShowPanel(true);
         camScript.OnGameEnded(true, gameObject);
         hasWon = true;
-        GameManager.instance.OnSuccess();
+        GameManager.instance.OnSuccess(chickenBuilding.actualParts.Count);
     }
 
     int arrowCount = 0;

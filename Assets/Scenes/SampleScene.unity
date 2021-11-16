@@ -1160,7 +1160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   offset: {x: 5.6, y: 6.33, z: -15.59}
-  followSpeed: 1
+  followSpeed: 1.25
   rewardGlow: {fileID: 1018035857}
 --- !u!198 &1018035857 stripped
 ParticleSystem:
@@ -1867,22 +1867,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1049280705903491820, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
-      propertyPath: m_Color.a
-      value: 0.64705884
-      objectReference: {fileID: 0}
-    - target: {fileID: 1049280706377354746, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1049280706449826992, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
-      propertyPath: m_fontSize
-      value: 32.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1049280706449826992, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 32.2
-      objectReference: {fileID: 0}
     - target: {fileID: 1049280706461815443, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1970,22 +1954,6 @@ PrefabInstance:
     - target: {fileID: 1049280706461815447, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
       propertyPath: m_Name
       value: GameUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 1049280706999478676, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
-      propertyPath: m_Color.a
-      value: 0.64705884
-      objectReference: {fileID: 0}
-    - target: {fileID: 1049280707274076475, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
-      propertyPath: m_fontSize
-      value: 32.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1049280707274076475, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 32.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1049280707401799078, guid: e30336999377ff8428e65ac28dcd488c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e30336999377ff8428e65ac28dcd488c, type: 3}

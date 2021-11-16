@@ -45,6 +45,7 @@ public class BodyPart : MonoBehaviour
     {
         if (anim != null)
         {
+
             anim.SetTrigger("Play");
         }
     }
